@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: vitals-health-app
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEOAPIFY_API_KEY
+        sync: false

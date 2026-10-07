@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitals — Preliminary Symptom Insight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div class="login-page" id="loginPage">
+  <div class="login-blob login-blob-heart"></div>
+  <div class="login-blob login-blob-lungs"></div>
+  <div class="login-blob login-blob-brain"></div>
+
+  <div class="wrap login-grid">
+    <div class="login-copy">
+      <span class="eyebrow">Member sign-in</span>
+      <h1>Your symptoms,<br><em>your first read.</em></h1>
+      <p class="lead">Sign in to save your check history, pick up the breathing exercise or memory game where you left off, and get a quicker read next time something feels off.</p>
+
+      <div class="login-stats">
+        <span class="login-stat-chip"><i class="dot" style="background:#E39189"></i>Heart, lung &amp; brain checks</span>
+        <span class="login-stat-chip"><i class="dot" style="background:#7FB8D8"></i>Lab report reader</span>
+        <span class="login-stat-chip"><i class="dot" style="background:#B7A2DD"></i>Runs entirely in your browser</span>
+      </div>
+
+      <p class="hero-disclaimer">This tool offers general, educational guidance only. It does not diagnose conditions and is never a substitute for a licensed healthcare professional.</p>
+
+      <div class="pulse-panel login-pulse">
+        <span class="pp-label">Live signal preview</span>
+        <svg viewBox="0 0 400 200">
+          <path class="wave-path" d="M0,100 L60,100 L75,50 L90,150 L105,30 L120,100 L400,100" stroke="#E39189" style="animation-duration:2.1s"/>
+          <path class="wave-path" d="M0,140 C40,110 80,170 120,140 C160,110 200,170 240,140 C280,110 320,170 360,140 L400,140" stroke="#7FB8D8" style="animation-duration:2.8s"/>
+          <path class="wave-path" d="M0,60 L20,60 L28,40 L36,75 L44,50 L55,60 L70,25 L85,80 L100,60 L400,60" stroke="#B7A2DD" style="animation-duration:3.3s"/>
+        </svg>
+        <div class="pp-legend">
+          <span><i class="dot" style="background:#E39189"></i>Heart</span>
+          <span><i class="dot" style="background:#7FB8D8"></i>Lungs</span>
+          <span><i class="dot" style="background:#B7A2DD"></i>Brain</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-card">
+      <div class="login-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="#3E8E7E"/></svg>
+        Vitals
+      </div>
+
+      <div class="login-tabs">
+        <button type="button" class="login-tab active" id="tabSignin" onclick="setLoginTab('signin')">Sign in</button>
+        <button type="button" class="login-tab" id="tabSignup" onclick="setLoginTab('signup')">Create account</button>
+      </div>
+
+      <p class="login-sub" id="loginSubText">Welcome back — sign in to continue</p>
+
+      <form id="loginForm">
+        <div class="field-row" id="nameRow" style="display:none;">
+          <label for="loginName">Full name</label>
+          <input type="text" id="loginName" placeholder="Jordan Ellis">
+        </div>
+        <div class="field-row">
+          <label for="loginEmail">Email or username</label>
+          <input type="text" id="loginEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="field-row">
+          <label for="loginPassword">Password</label>
+          <div class="pw-field">
+            <input type="password" id="loginPassword" placeholder="••••••••" required>
+            <button type="button" class="pw-toggle" onclick="toggleLoginPassword()" aria-label="Show password" id="pwToggleBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="pwEyeIcon"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="login-row" id="rememberRow">
+          <label class="remember-label"><input type="checkbox" id="rememberMe"> Remember me</label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary login-submit" id="loginSubmitBtn">Sign in →</button>
+      </form>
+
+      <div class="login-divider"><span>or continue with</span></div>
+      <div class="social-row">
+        <button class="btn btn-ghost social-btn" onclick="document.getElementById('loginForm').requestSubmit()">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.28-1.93-6.14-4.53H2.18v2.85A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.86 14.1A6.6 6.6 0 0 1 5.5 12c0-.73.13-1.44.36-2.1V7.05H2.18A11 11 0 0 0 1 12c0 1.77.43 3.45 1.18 4.95l3.68-2.85z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a11 11 0 0 0-9.82 6.05l3.68 2.85C6.72 7.3 9.14 5.38 12 5.38z"/></svg>
+          Google
+        </button>
+        <button class="btn btn-ghost social-btn" onclick="document.getElementById('loginForm').requestSubmit()">
+          <svg viewBox="0 0 23 23" width="15" height="15"><rect x="1" y="1" width="10" height="10" fill="#F35325"/><rect x="12" y="1" width="10" height="10" fill="#81BC06"/><rect x="1" y="12" width="10" height="10" fill="#05A6F0"/><rect x="12" y="12" width="10" height="10" fill="#FFBA08"/></svg>
+          Microsoft
+        </button>
+      </div>
+      <p class="login-footer-note">Educational demo · your data stays on this device</p>
+    </div>
+  </div>
+</div>
+
+<div id="appContent">
+
+<nav>
+  <div class="wrap">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="#3E8E7E"/></svg>
+      Vitals
+    </div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#organs">Check symptoms</a>
+        <a href="#unwind">Unwind</a>
+        <a href="#brain-game">Memory game</a>
+        <a href="#lab-reader">Lab report reader</a>
+        <a href="#find-care">Find care</a>
+        <span class="nav-badge">Educational demo · not a diagnosis</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="theme-toggle" id="logoutBtn" onclick="logout()" aria-label="Sign out" title="Sign out">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Preliminary symptom insight</span>
+      <h1>Know what your body<br><em>might</em> be telling you.</h1>
+      <p class="lead">Vitals looks at symptoms across your heart, lungs, and brain and gives you a clear, early read — so you know when it's worth a closer look from a real clinician.</p>
+      <div class="hero-ctas">
+        <a href="#organs" class="btn btn-primary">Start a symptom check →</a>
+        <a href="#unwind" class="btn btn-ghost">Try the breathing exercise</a>
+      </div>
+      <p class="hero-disclaimer">This tool offers general, educational guidance only. It does not diagnose conditions and is never a substitute for a licensed healthcare professional.</p>
+    </div>
+    <div class="pulse-panel">
+      <span class="pp-label">Live signal preview</span>
+      <svg viewBox="0 0 400 200">
+        <path class="wave-path" d="M0,100 L60,100 L75,50 L90,150 L105,30 L120,100 L400,100" stroke="#E39189" style="animation-duration:2.1s"/>
+        <path class="wave-path" d="M0,140 C40,110 80,170 120,140 C160,110 200,170 240,140 C280,110 320,170 360,140 L400,140" stroke="#7FB8D8" style="animation-duration:2.8s"/>
+        <path class="wave-path" d="M0,60 L20,60 L28,40 L36,75 L44,50 L55,60 L70,25 L85,80 L100,60 L400,60" stroke="#B7A2DD" style="animation-duration:3.3s"/>
+      </svg>
+      <div class="pp-legend">
+        <span><i class="dot" style="background:#E39189"></i>Heart</span>
+        <span><i class="dot" style="background:#7FB8D8"></i>Lungs</span>
+        <span><i class="dot" style="background:#B7A2DD"></i>Brain</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORGAN CHECKERS -->
+<section class="section" id="organs">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Step one</span>
+      <h2>Choose where it's coming from</h2>
+      <p>Pick the system that's concerning you. Each check takes about a minute and walks through symptoms, a couple of quick follow-ups, and a plain-language summary.</p>
+    </div>
+    <div class="organ-grid">
+
+      <div class="organ-card" data-organ="heart">
+        <div class="oc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-4.5-8-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-8 11-8 11z"/></svg></div>
+        <svg class="oc-wave" viewBox="0 0 300 44"><path class="wave-path" d="M0,22 L100,22 L112,6 L124,38 L136,6 L148,22 L300,22" stroke="#BE5148" style="animation-duration:2s"/></svg>
+        <h3>Heart</h3>
+        <p>Chest discomfort, palpitations, breathlessness, swelling, or fatigue.</p>
+        <button class="oc-cta" onclick="openChecker('heart')">Check heart symptoms →</button>
+      </div>
+
+      <div class="organ-card" data-organ="lungs">
+        <div class="oc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3v6.5C9 12 6 12 6 15v5a1 1 0 0 1-2 0v-6c0-3.5 3-4.5 5-6.5M15 3v6.5c0 2.5 3 2.5 3 5.5v5a1 1 0 0 0 2 0v-6c0-3.5-3-4.5-5-6.5" /><path d="M12 3v7"/></svg></div>
+        <svg class="oc-wave" viewBox="0 0 300 44"><path class="wave-path" d="M0,30 C25,14 50,38 75,30 C100,14 125,38 150,30 C175,14 200,38 225,30 C250,14 275,38 300,30" stroke="#3E7EA8" style="animation-duration:2.6s"/></svg>
+        <h3>Lungs</h3>
+        <p>Cough, wheezing, shortness of breath, chest tightness, or fever.</p>
+        <button class="oc-cta" onclick="openChecker('lungs')">Check lung symptoms →</button>
+      </div>
+
+      <div class="organ-card" data-organ="brain">
+        <div class="oc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4a5 5 0 0 0-4 8 5 5 0 0 0 4 8h6a5 5 0 0 0 4-8 5 5 0 0 0-4-8 4 4 0 0 0-6 0z"/></svg></div>
+        <svg class="oc-wave" viewBox="0 0 300 44"><path class="wave-path" d="M0,22 L15,22 L21,10 L27,32 L33,16 L40,22 L52,4 L64,38 L76,22 L300,22" stroke="#7C63A6" style="animation-duration:2.9s"/></svg>
+        <h3>Brain</h3>
+        <p>Headache, dizziness, memory lapses, numbness, or trouble speaking.</p>
+        <button class="oc-cta" onclick="openChecker('brain')">Check neuro symptoms →</button>
+        <a class="oc-subcta" href="#brain-game">Or try the memory game →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STRESS RELIEF -->
+<section class="section section-alt" id="unwind">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Step two, optional</span>
+      <h2>Waiting on results? Breathe for a minute.</h2>
+      <p>A slow breathing pattern is one of the fastest ways to bring your nervous system down a notch. Follow the circle — in as it grows, out as it shrinks.</p>
+    </div>
+    <div class="game-panel">
+      <span style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;color:#9CC9BE;text-transform:uppercase;" id="breathPhaseLabel">Press start when ready</span>
+      <div class="breath-circle-wrap">
+        <div class="breath-ring"></div>
+        <div class="breath-ring"></div>
+        <div class="breath-circle" id="breathCircle">Start</div>
+      </div>
+      <div class="game-stats">
+        <span>Cycles completed<b id="cycleCount">0</b></span>
+        <span>Pattern<b>4–4–4–4</b></span>
+      </div>
+      <button class="game-btn" id="breathToggle" onclick="toggleBreathing()">Start breathing exercise</button>
+    </div>
+  </div>
+</section>
+
+<!-- MEMORY GAME -->
+<section class="section" id="brain-game">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Step three, optional</span>
+      <h2>Give your brain a light workout</h2>
+      <p>A quick memory match is a low-stakes way to check in with your own recall while you wait on a brain check — flip two cards at a time and find all eight pairs.</p>
+    </div>
+    <div class="memory-panel">
+      <div class="memory-stats">
+        <span>Moves<b id="memMoves">0</b></span>
+        <span>Pairs found<b id="memMatches">0 / 8</b></span>
+        <span>Best time<b id="memBest">—</b></span>
+      </div>
+      <div class="memory-grid" id="memoryGrid"></div>
+      <div class="memory-footer">
+        <span class="memory-msg" id="memoryMsg">Flip two cards to find a match.</span>
+        <button class="game-btn memory-restart" id="memoryRestart" onclick="startMemoryGame()">Restart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAB REPORT READER -->
+<section class="section section-alt" id="lab-reader">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Optional · read-only</span>
+      <h2>Understand a lab report, in plain language</h2>
+      <p>Upload a photo of a blood test or lab panel and Vitals will read the values it can recognize and explain, in general terms, what each marker relates to. It does not name a condition, a cause, or a cure — that reading always needs a clinician who has your full history.</p>
+    </div>
+
+    <div class="lab-panel">
+      <div class="lab-upload" id="labUpload">
+        <input type="file" id="labFileInput" accept="image/*" onchange="handleLabFile(event)" hidden>
+        <div class="lab-upload-inner" id="labUploadInner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <p><strong>Upload a photo of your lab report</strong></p>
+          <p class="lab-upload-sub">JPG or PNG. Processed entirely in your browser — the image is never uploaded anywhere.</p>
+          <button class="btn btn-primary" onclick="document.getElementById('labFileInput').click()">Choose image</button>
+        </div>
+      </div>
+
+      <div class="lab-results" id="labResults"></div>
+
+      <div class="disclaimer-box lab-disclaimer">
+        This reader only recognizes common markers and typical adult reference ranges — it does not know your age, sex, medications, or history, all of which change what a value means. It never identifies a condition, a cause, or a treatment. Please share the original report with a doctor or your lab for an actual interpretation.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIND CARE NEAR YOU -->
+<section class="section" id="find-care">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Optional · nearby help</span>
+      <h2>Find care near you</h2>
+      <p>If a check-up sounds like the right next step, here's who's nearby. This calls the Geoapify Places API with your browser's location — nothing is sent anywhere except that one request.</p>
+    </div>
+
+    <div class="care-panel">
+      <div class="care-controls">
+        <div class="care-filters" id="careFilters">
+          <button class="care-filter active" data-cat="healthcare.pharmacy" onclick="setCareCategory(this,'healthcare.pharmacy')">Pharmacies</button>
+          <button class="care-filter" data-cat="healthcare.hospital" onclick="setCareCategory(this,'healthcare.hospital')">Hospitals &amp; urgent care</button>
+          <button class="care-filter" data-cat="healthcare" onclick="setCareCategory(this,'healthcare')">Doctors &amp; clinics</button>
+        </div>
+        <button class="btn btn-primary" id="careLocateBtn" onclick="findNearbyCare()">Use my location →</button>
+      </div>
+
+      <div class="care-results" id="careResults">
+        <div class="care-empty">Choose a category above, then share your location to see what's nearby.</div>
+      </div>
+
+      <div class="disclaimer-box care-disclaimer">Listings come from OpenStreetMap data via Geoapify and may be incomplete or out of date — call ahead to confirm hours, and use 911 (or your local emergency number) for anything urgent.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <span class="f-logo">Vitals</span>
+      <p>Built as a student demo of an AI-based preliminary symptom checker. Logic shown here is rule-based and for educational purposes — always consult a qualified doctor for real symptoms.</p>
+    </div>
+    <span style="font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);">Heart · Lungs · Brain</span>
+  </div>
+</footer>
+
+<!-- CHECKER MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeChecker()">✕</button>
+    <span class="modal-organ-tag" id="modalTag">Heart</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:33%"></div></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<button class="chat-toggle" onclick="toggleChat()" aria-label="Open chat assistant">
+  <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div><span class="ch-name">Vitals Assistant</span><span class="ch-status">● Here to help you navigate</span></div>
+    <button onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+  </div>
+</div>
+
+</div><!-- /#appContent -->
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "vitals-symptom-insight",
+  "version": "1.0.0",
+  "description": "Vitals symptom checker with AI assistant and healthcare finder",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "vitals",
+    "health",
+    "gemini",
+    "geoapify"
+  ],
+  "author": "",
+  "license": "ISC"
+}
